@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[], char *envp) try {
+int main(int argc, char *argv[]) try {
   struct timeval timevalA;
   struct timeval timevalB;
 
@@ -36,15 +36,19 @@ int main(int argc, char *argv[], char *envp) try {
   cout << timevalB.tv_sec - timevalA.tv_sec +
               (timevalB.tv_usec - timevalA.tv_usec) / (double)1000000
        << endl;
+  cout << generations << endl;
 
-  for (long unsigned int i = 0; i < n; ++i) {
-    for (long unsigned int j = 0; j < n; ++j) {
-      if (j) {
-        cout << " ";
+  // printf if print is enabled
+  if (argc > 1 && argv[1][0] == 'p') {
+    for (long unsigned int i = 0; i < n; ++i) {
+      for (long unsigned int j = 0; j < n; ++j) {
+        if (j) {
+          cout << " ";
+        }
+        cout << output[i][j];
       }
-      cout << output[i][j];
+      cout << endl;
     }
-    cout << endl;
   }
 
   return EXIT_SUCCESS;

@@ -1,17 +1,15 @@
-#include "life.hh"
-#include <cstdlib>
-#include <iostream>
-#include <omp.h>
-
-using namespace std;
+#include "life.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void life(int argc, char *argv[], bool **output, const long unsigned int g,
           const long unsigned int n, const bool **input) {
-  bool **even = new bool *[n];
-  bool **odd = new bool *[n];
+  bool **even = (bool **)malloc(n * sizeof(bool *));
+  bool **odd = (bool **)malloc(n * sizeof(bool *));
   for (long unsigned int i = 0; i < n; ++i) {
-    even[i] = new bool[n];
-    odd[i] = new bool[n];
+    even[i] = (bool *)malloc(n * sizeof(bool));
+    odd[i] = (bool *)malloc(n * sizeof(bool));
   }
   const bool ***present;
   bool ***future;
@@ -19,7 +17,6 @@ void life(int argc, char *argv[], bool **output, const long unsigned int g,
 
   for (long unsigned int generation = 0; generation < g; ++generation) {
     future = generation & 1 ? &odd : &even;
-#pragma omp parallel for
     for (long unsigned int i = 0; i < n; ++i) {
       for (long unsigned int j = 0; j < n; ++j) {
         long unsigned int neighbors = 0;
@@ -73,4 +70,12 @@ void life(int argc, char *argv[], bool **output, const long unsigned int g,
       output[i][j] = (*present)[i][j];
     }
   }
+
+  // Libera memória
+  for (long unsigned int i = 0; i < n; ++i) {
+    free(even[i]);
+    free(odd[i]);
+  }
+  free(even);
+  free(odd);
 }
