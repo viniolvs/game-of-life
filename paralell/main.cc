@@ -33,10 +33,10 @@ int main(int argc, char *argv[]) try {
        (const long unsigned int)n, (const bool **)input);
   gettimeofday(&timevalB, NULL);
 
+  cout << generations << " ";
   cout << timevalB.tv_sec - timevalA.tv_sec +
               (timevalB.tv_usec - timevalA.tv_usec) / (double)1000000
        << endl;
-  cout << generations << endl;
 
   // printf if print is enabled
   if (argc > 1 && argv[1][0] == 'p') {

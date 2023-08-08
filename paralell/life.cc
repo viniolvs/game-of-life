@@ -16,6 +16,9 @@ void life(int argc, char *argv[], bool **output, const long unsigned int g,
   const bool ***present;
   bool ***future;
   present = &input;
+  // exibe o numero de threads
+  int max_threads = omp_get_max_threads();
+  omp_set_num_threads(max_threads);
 
   for (long unsigned int generation = 0; generation < g; ++generation) {
     future = generation & 1 ? &odd : &even;
