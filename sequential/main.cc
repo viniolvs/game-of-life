@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[], char *envp) try {
+int main(int argc, char *argv[]) try {
   struct timeval timevalA;
   struct timeval timevalB;
 
